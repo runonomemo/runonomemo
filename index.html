@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>公開メモ帳</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f8f6fc;margin:0;color:#444}
+header{background:linear-gradient(135deg,#b9a7e6,#d8c8ff);color:#fff;padding:24px;text-align:center}
+.wrap{max-width:900px;margin:auto;padding:16px}
+#search{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin-bottom:18px;font-size:16px}
+.card{background:#fff;border:1px solid #ece5ff;border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 4px 10px rgba(0,0,0,.06);cursor:pointer}
+.title{font-size:22px;color:#6c5ab5;font-weight:bold}
+.date{font-size:13px;color:#888;margin:6px 0}
+.preview{color:#666}
+.detail{display:none;margin-top:12px}
+img,iframe{max-width:100%;width:100%;border-radius:12px;margin-top:12px;border:none}
+</style></head><body><header><h1>公開メモ帳</h1></header><div class="wrap"><input id="search" placeholder=" 検索"><div id="list"></div></div>
+<script>
+const memos=[
+{title:"GitHubの使い方",date:"2026-07-12",text:"GitHub Pagesを使えば無料でホームページを公開できます。HTMLだけでも十分作れます。",image:"https://picsum.photos/800/450?1"},
+{title:"今日の勉強",date:"2026-07-11",text:"JavaScriptでカードをクリックすると詳細表示する仕組みを学びました。",youtube:"https://www.youtube.com/embed/dQw4w9WgXcQ"},
+{title:"旅行メモ",date:"2026-07-10",text:"北海道のラベンダー畑がとても綺麗でした。",image:"https://picsum.photos/800/450?2"}];
+const list=document.getElementById("list"),s=document.getElementById("search");
+function draw(){
+list.innerHTML="";
+memos.filter(m=>(m.title+m.text).toLowerCase().includes(s.value.toLowerCase())).forEach(m=>{
+let c=document.createElement("div");c.className="card";
+c.innerHTML=`<div class=title>${m.title}</div><div class=date> ${m.date}</div><div class=preview>${m.text.substring(0,20)}...</div><div class=detail><p>${m.text}</p>${m.image?`<img src="${m.image}">`:""}${m.youtube?`<iframe height="315" src="${m.youtube}" allowfullscreen></iframe>`:""}</div>`;
+c.onclick=()=>{let d=c.querySelector(".detail");d.style.display=d.style.display=="block"?"none":"block";}
+list.appendChild(c);});
+}
+s.oninput=draw;draw();
+</script></body></html>
